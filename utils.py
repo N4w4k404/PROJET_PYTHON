@@ -25,44 +25,60 @@ def valid_ip(ip):
     # Regex IPV6
     p1 = re.compile(regex1)
 
-    # Checking if it is a valid IPv4 addresses
+    # Check de l'IPv4
     if (re.search(p, ip)):
         return ("Valid IPv4")
 
-    # Checking if it is a valid IPv6 addresses
+    # Check de l'IPv6
     elif (re.search(p1, ip)):
         return ("Valid IPv6")
 
-    # Return Invalid
+    # Retour invalide
     return ("Invalid IP")
 
 def scan_ports(target, start_port, end_port):
     # On vérifie la validité de l'IP
     v_ip = valid_ip(target)
+    # Si IPv4
     if (v_ip == "Valid IPv4") :
+        # Print de lancement
         print(f"Scan des ports ouverts sur {target}...")
+        # Tant que les ports ne sont pas tous vérifier on continue
         for port in range(start_port, end_port + 1):
             try:
+                # essaie de se connecter au port à l'aide de socket
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                # Définition du timout de connection
                 s.settimeout(0.5)
+                # Ajoute a la variable result le résultat de la connection socket
                 result = s.connect_ex((target, port))
+                # Si le résultat est de 0
                 if result == 0:
                     print(f"Port {port} ouvert")
+                # Fermeture de la connexion
                 s.close()
+            # en cas d'erreur afficher l'erreur
             except Exception as e:
                 print(f"Erreur sur le port {port}: {e}")
+    # Si IPv6
     if (v_ip == "Valid IPv6") :
+        # Tant que les ports ne sont pas tous vérifier on continue
         print(f"Scan des ports ouverts sur {target}...")
         for port in range(start_port, end_port + 1):
             try:
+                # essaie de se connecter au port à l'aide de socket
                 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
                 s.settimeout(0.5)
+                # Ajoute a la variable result le résultat de la connection socket
                 result = s.connect_ex((target, port, 0, 0))
+                # Si le résultat est de 0
                 if result == 0:
                     print(f"Port {port} ouvert")
+                # Fermeture de la connexion
                 s.close()
             except Exception as e:
                 print(f"Erreur sur le port {port}: {e}")
+    # Si l'entrée n'est pas une IP
     elif (v_ip == "Invalid IP") :
         print(v_ip)
         quit()
