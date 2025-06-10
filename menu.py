@@ -18,7 +18,7 @@ def main() :
 
     print (choix)
     if (choix == choices[0]):
-        ip = input("IP : ")
+        ip = input("IPv4 : ")
         sport = int(input ("\nStarting port : "))
         eport = int(input ("\nEnd ports : "))
         utils.scan_ports(ip,sport,eport)
