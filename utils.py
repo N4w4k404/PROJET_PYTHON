@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Ce fichier contiendra les fonctions appelées par menu.py
 #!/usr/bin/env python
+# Ce fichier contiendra les fonctions appelées par menu.py
+#!/usr/bin/env python
 # Fonctionnne pour le 7 
 
 # Socket librairie pour gérer l'interface réseau de bas niveau
