@@ -39,7 +39,7 @@ def main() :
         identifievulnwebcourantes.sql(urls)
         identifievulnwebcourantes.bruteforce(username_file,password_file,urls)
 
-    elif (choix == choices[1]):
+    elif (choix == choices[2]):
 
         ip = input("IP : ")
         sport = int(input ("\nStarting port : "))
