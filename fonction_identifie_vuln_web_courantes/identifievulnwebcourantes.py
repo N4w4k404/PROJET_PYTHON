@@ -12,6 +12,8 @@ def collect_urls(base_url):
 # print("URLs collectées :", urls)
 
 def xss(urls):
+    Dictionnaire_XSS = {}
+    compteur = 0
     print("----------------------------Tests XSS---------------------")
     # Payloads XSS classiques
     payloads = [
@@ -33,16 +35,22 @@ def xss(urls):
 
                 if payload.lower() in content:
                     print(f"Concluante , faille de sécurité détéctée")
+                    print(payload, url)
+                    Dictionnaire_XSS[compteur] = {"Payload": payload, "URL": url}
+                    compteur += 1                
                 else:
                     print("Aucun reflet XSS détecté pour ce payload.")
 
             except requests.exceptions.RequestException as e:
                 print(f"Erreur de connexion : {e}")
 
+    print(f'Final : {Dictionnaire_XSS}')    
     print("---------------------Tests XSS terminés.--------------------")
-
+    return Dictionnaire_XSS
 
 def sql(urls):
+    Dictionnaire_SQLi = {}
+    compteur = 0
     print("----------------------------Tests SQLi---------------------")
     # Payloads SQL Injection
     payloads = [
@@ -66,19 +74,28 @@ def sql(urls):
                 erreurs = ["mysql", "syntax error", "sql error", "query failed","OperationalError","sqlite3"]
                 if any(erreur in content for erreur in erreurs):
                     print(f"️ Possible vulnérabilité SQLi détectée avec : {payload}")
+                    print(payload, url)
+                    Dictionnaire_SQLi[compteur] = {"Payload": payload, "URL": url}
+                    compteur += 1     
                 else:
                     # Nouvelle condition ajoutée ici
                     if "400 Bad Request" in response.text[:200]:
                         print("ne marche pas, erreur 400")
                     else:
+                        print(payload, url)
+                        Dictionnaire_SQLi[compteur] = {"Payload": payload, "URL": url}
+                        compteur += 1   
                         print(f"Réponse du serveur : {response.text[:200]}...")        
             except requests.exceptions.RequestException as e:
                 print(f"Erreur de connexion pour l'URL suivante : {url}")
 
+    print(f'Final : {Dictionnaire_SQLi}')    
     print("---------------------Tests SQLi terminés.--------------------")
-
+    return Dictionnaire_SQLi
 
 def bruteforce(username_file,password_file, urls):
+    Dictionnaire_BruteForce = {}
+    compteur = 0
     for url in urls:
 
         # Noms des fichiers contenant les wordlists
@@ -145,6 +162,9 @@ def bruteforce(username_file,password_file, urls):
                     if "Bienvenue," in response.text:
                         print(f"🥳 SUCCÈS ! Identifiants trouvés : Username='{username}', Password='{password}'")
                         found_credentials.append((username, password))
+                        print(found_credentials, url)
+                        Dictionnaire_BruteForce[compteur] = {"Payload": found_credentials, "URL": url}
+                        compteur += 1  
                         # Optionnel : Si vous voulez arrêter après le premier succès, décommentez la ligne ci-dessous
                         # break # Permet de sortir de la boucle des mots de passe (pour le mot de passe actuel)
                     elif "Échec de connexion." in response.text:
@@ -174,7 +194,8 @@ def bruteforce(username_file,password_file, urls):
             print("Bruteforce terminé. Aucune combinaison d'identifiants valide trouvée avec les listes fournies.")
 
         print(f"Total des tentatives : {attempt_count}")
-
+        print(f'Final : {Dictionnaire_BruteForce}')    
+    return Dictionnaire_BruteForce
 # username_file = "usernames.txt"
 # password_file = "passwords.txt"
 # xss(urls)

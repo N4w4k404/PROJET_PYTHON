@@ -7,7 +7,7 @@ from fonction_identifie_vuln_web_courantes import identifievulnwebcourantes
 
 username_file = "fonction_identifie_vuln_web_courantes/usernames.txt"
 password_file = "fonction_identifie_vuln_web_courantes/passwords.txt"
-base_url = "http://127.0.0.1:5000"
+# base_url = "http://127.0.0.1:5000"
 
 def main() :
     i = 1
@@ -29,6 +29,9 @@ def main() :
         eport = int(input ("\nEnd ports : "))
         utils.scan_ports(ip,sport,eport)
     elif (choix == choices[1]):
+
+        base_url=input("veuillez séléctionner une adresse ip :")
+
         urls = identifievulnwebcourantes.collect_urls(base_url)
         print("URLs collectées :", urls)
         identifievulnwebcourantes.xss(urls)
