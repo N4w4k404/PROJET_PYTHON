@@ -16,7 +16,7 @@ def main() :
     # Menu de choix 👌
     choices = ["Scanne les ports ouverts d'une machine cible",
                "Identifie des vulnérabilités web courantes",
-               "test automatiser"
+               "test automatiser",
                "EXIT"]
     questions = [inquirer.List('choice', message="Que veux-tu faire ?", choices = choices)]
     answers = inquirer.prompt(questions)
@@ -40,7 +40,7 @@ def main() :
         identifievulnwebcourantes.bruteforce(username_file,password_file,urls)
 
     elif (choix == choices[1]):
-        
+
         ip = input("IP : ")
         sport = int(input ("\nStarting port : "))
         eport = int(input ("\nEnd ports : "))
