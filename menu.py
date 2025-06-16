@@ -16,6 +16,7 @@ def main() :
     # Menu de choix 👌
     choices = ["Scanne les ports ouverts d'une machine cible",
                "Identifie des vulnérabilités web courantes",
+               "test automatiser"
                "EXIT"]
     questions = [inquirer.List('choice', message="Que veux-tu faire ?", choices = choices)]
     answers = inquirer.prompt(questions)
@@ -37,6 +38,21 @@ def main() :
         identifievulnwebcourantes.xss(urls)
         identifievulnwebcourantes.sql(urls)
         identifievulnwebcourantes.bruteforce(username_file,password_file,urls)
+
+    elif (choix == choices[1]):
+        
+        ip = input("IP : ")
+        sport = int(input ("\nStarting port : "))
+        eport = int(input ("\nEnd ports : "))
+        utils.scan_ports(ip,sport,eport)
+
+        base_url=input("veuillez séléctionner une adresse ip :")
+        urls = identifievulnwebcourantes.collect_urls(base_url)
+        print("URLs collectées :", urls)
+        identifievulnwebcourantes.xss(urls)
+        identifievulnwebcourantes.sql(urls)
+        identifievulnwebcourantes.bruteforce(username_file,password_file,urls)
+
     elif (choix == "EXIT"):
         print("-- Sortie du programme --")
         quit()
