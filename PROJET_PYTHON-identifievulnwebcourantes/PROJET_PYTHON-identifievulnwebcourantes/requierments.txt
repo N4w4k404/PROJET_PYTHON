@@ -1,7 +1,0 @@
-blessed==1.21.0
-editor==1.6.6
-inquirer==3.4.0
-readchar==4.2.1
-runs==1.2.2
-wcwidth==0.2.13
-xmod==1.8.1
