@@ -3,6 +3,7 @@ import os
 import utils
 import inquirer
 import utils
+from tools import anom_detect
 from fonction_identifie_vuln_web_courantes import identifievulnwebcourantes
 
 username_file = "fonction_identifie_vuln_web_courantes/usernames.txt"
@@ -16,6 +17,7 @@ def main() :
     # Menu de choix 👌
     choices = ["Scanne les ports ouverts d'une machine cible",
                "Identifie des vulnérabilités web courantes",
+               "enregistre les captures réseaux et lance une détection",
                "EXIT"]
     questions = [inquirer.List('choice', message="Que veux-tu faire ?", choices = choices)]
     answers = inquirer.prompt(questions)
@@ -34,6 +36,8 @@ def main() :
         identifievulnwebcourantes.xss(urls)
         identifievulnwebcourantes.sql(urls)
         identifievulnwebcourantes.bruteforce(username_file,password_file,urls)
+    elif (choix == choices[2]):
+        anom_detect.check_warning()
     elif (choix == "EXIT"):
         print("-- Sortie du programme --")
         quit()
