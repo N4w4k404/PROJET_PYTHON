@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pcap
 *.py[cod]
 *$py.class
 
